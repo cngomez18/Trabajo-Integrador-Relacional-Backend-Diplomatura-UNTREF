@@ -1,16 +1,21 @@
 const express = require('express');
 const { sequelize } = require('./conexion/database.js');   
+const { swaggerUi, swaggerDocs } = require('./utils/swaggerConfig')
+
 const contenidoRoutes = require('./routes/contenidoRoutes.js');
 const contenidoGeneroRoutes = require('./routes/contenidoGeneroRoutes.js');
 const contenidoActorRoutes = require('./routes/contenidoActorRoutes.js')
 const actorRoutes = require('./routes/actorRoutes.js');
-const generoRoutes = require('./routes/generoRoutes.js');         
+const generoRoutes = require('./routes/generoRoutes.js');        
+
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use('/actor', actorRoutes)
 app.use('/genero', generoRoutes)
