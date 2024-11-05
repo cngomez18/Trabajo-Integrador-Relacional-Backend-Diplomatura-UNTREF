@@ -41,7 +41,7 @@ const { sequelize } = require('../conexion/database')
 router.get('/', async (req, res) => {
     try {
         const results = await sequelize.query(
-            `SELECT c.titulo, a.first_name, a.last_name
+            `SELECT c.id, c.titulo, a.first_name, a.last_name
                 FROM contenido_actor ca
                 JOIN contenido c ON ca.contenido_id = c.id
                 JOIN actor a ON ca.actor_id = a.id`,

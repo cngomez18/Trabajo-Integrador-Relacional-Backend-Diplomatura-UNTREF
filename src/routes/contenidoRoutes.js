@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
  *     summary: Filtrar contenidos por título y categoría
  *     tags:
  *        - Contenido    
- * description: Endpoint para filtrar contenidos (películas o series) según título y/o categoría.
+ *     description: Endpoint para filtrar contenidos (películas o series) según título o categoría.
  *     parameters:
  *       - in: query
  *         name: titulo
@@ -121,7 +121,7 @@ router.get('/filtrar', async (req, res) => {
 
 /**
  * @swagger
- * /contenido{id}:
+ * /contenido/{id}:
  *   get:
  *     summary: Obtener un contenido(película o serie) por ID
  *     tags:
