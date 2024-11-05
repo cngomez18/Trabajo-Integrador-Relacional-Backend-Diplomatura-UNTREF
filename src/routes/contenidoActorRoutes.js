@@ -1,6 +1,48 @@
+/**
+ * @swagger
+ * tags:
+ *   name: ContenidoActor
+ *   description: Rutas relacionadas con contenido y actores
+ */
+
 const express = require('express');
 const router = express.Router();
 const { sequelize } = require('../conexion/database')
+
+
+/**
+ * @swagger
+ * /contenidoActor:
+ *   get:
+ *     summary: Obtener todos los actores de cada contenido
+ *     tags:
+ *       - ContenidoActor
+ *     description: Retorna una lista de todos los actores asociados con cada contenido en la base de datos.
+ *     responses:
+ *       200:
+ *         description: Lista de actores y sus respectivos contenidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   titulo:
+ *                     type: string
+ *                     description: Título del contenido
+ *                   first_name:
+ *                     type: string
+ *                     description: Nombre del actor
+ *                   last_name:
+ *                     type: string
+ *                     description: Apellido del actor
+ *       500:
+ *         description: Error interno al obtener datos de contenido_actor
+ *         content:
+ *           application/json:
+ *             example: { "error": "Ocurrio un error buscando datos de contenido_actor." }
+ */
 
 
 router.get('/', async (req, res) => {
@@ -18,6 +60,44 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Ocurrio un error buscando datos de contenido_actor.' });
     }
 });
+
+/**
+ * @swagger
+ * /contenidoActor/{contenidoId}:
+ *   get:
+ *     summary: Obtener actores por ID de contenido
+ *     tags:
+ *       - ContenidoActor
+ *     description: Retorna los actores asociados a un contenido específico mediante su ID.
+ *     parameters:
+ *       - in: path
+ *         name: contenidoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido
+ *     responses:
+ *       200:
+ *         description: Lista de actores asociados al contenido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   first_name:
+ *                     type: string
+ *                     description: Nombre del actor
+ *                   last_name:
+ *                     type: string
+ *                     description: Apellido del actor
+ *       500:
+ *         description: Error interno al obtener los actores
+ *         content:
+ *           application/json:
+ *             example: { "error": "Ocurrio un error buscando los actores." }
+ */
 
 router.get('/:contenidoId', async (req, res) => {
     const { contenidoId } = req.params;
@@ -38,6 +118,52 @@ router.get('/:contenidoId', async (req, res) => {
         res.status(500).json({ error: 'Ocurrio un error buscando los actores.' });
     }
 });
+
+/**
+ * @swagger
+ * /contenidoActor/actualizar/{contenidoId}:
+ *   put:
+ *     summary: Actualizar asociación de un actor a un contenido
+ *     tags:
+ *       - ContenidoActor
+ *     description: Añade o actualiza la asociación de un actor a un contenido existente en la base de datos.
+ *     parameters:
+ *       - in: path
+ *         name: contenidoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *                 description: Nombre del actor
+ *               last_name:
+ *                 type: string
+ *                 description: Apellido del actor
+ *     responses:
+ *       200:
+ *         description: Asociación de actor y contenido actualizada exitosamente
+ *         content:
+ *           application/json:
+ *             example: { "message": "Se añadio correctamente el actor a la pelicula." }
+ *       404:
+ *         description: Actor no encontrado
+ *         content:
+ *           application/json:
+ *             example: { "error": "Actor not found." }
+ *       500:
+ *         description: Error al actualizar asociación
+ *         content:
+ *           application/json:
+ *             example: { "error": "Ocurrio un error al actualizar contenido_actor." }
+ */
 
 router.put('/actualizar/:contenidoId', async (req, res) => {
     const { contenidoId } = req.params;
@@ -70,6 +196,49 @@ router.put('/actualizar/:contenidoId', async (req, res) => {
         res.status(500).json({ error: 'Ocurrio un error al actualizar contenido_actor.' });
     }
 });
+
+/**
+ * @swagger
+ * /contenidoActor:
+ *   post:
+ *     summary: Asociar un actor a un contenido
+ *     tags:
+ *       - ContenidoActor
+ *     description: Asocia un actor existente a un contenido en la base de datos.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *                 description: Título del contenido
+ *               first_name:
+ *                 type: string
+ *                 description: Nombre del actor
+ *               last_name:
+ *                 type: string
+ *                 description: Apellido del actor
+ *     responses:
+ *       200:
+ *         description: Actor asociado exitosamente al contenido
+ *         content:
+ *           application/json:
+ *             example: { "message": "Se añadio correctamente la entrada en contenido_actor." }
+ *       404:
+ *         description: Contenido o actor no encontrado
+ *         content:
+ *           application/json:
+ *             example: { "error": "No se encontro la pelicula." }
+ *       500:
+ *         description: Error al asociar el actor al contenido
+ *         content:
+ *           application/json:
+ *             example: { "error": "Ocurrio un error al agregar una entrada nueva." }
+ */
+
 
 router.post('/', async (req, res) => {
     const { titulo, first_name, last_name } = req.body;
@@ -113,6 +282,39 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Ocurrio un error al agregar una entrada nueva.' });
     }
 });
+
+/**
+ * @swagger
+ * /contenidoActor/{contenidoId}:
+ *   delete:
+ *     summary: Eliminar todas las asociaciones de actores a un contenido
+ *     tags:
+ *       - ContenidoActor   
+ *     description: Elimina todas las asociaciones de actores para un contenido específico mediante su ID.
+ *     parameters:
+ *       - in: path
+ *         name: contenidoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido
+ *     responses:
+ *       200:
+ *         description: Asociaciones eliminadas exitosamente
+ *         content:
+ *           application/json:
+ *             example: { "message": "Todas las entradas de esa pelicula se eliminaron correctamente." }
+ *       404:
+ *         description: Asociación no encontrada
+ *         content:
+ *           application/json:
+ *             example: { "error": "No se encontro la entrada en contenido_actor." }
+ *       500:
+ *         description: Error al eliminar la asociación
+ *         content:
+ *           application/json:
+ *             example: { "error": "Ocurrio un error al eliminar la entrada." }
+ */
 
 router.delete('/:contenidoId', async (req, res) => {
     const { contenidoId } = req.params;

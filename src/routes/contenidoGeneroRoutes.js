@@ -1,6 +1,45 @@
+/**
+ * @swagger
+ * tags:
+ *   name: ContenidoGenero
+ *   description: Rutas relacionadas con contenido y generos
+ */
+
 const express = require('express');
 const router = express.Router();
 const { sequelize } = require('../conexion/database')
+
+/**
+ * @swagger
+ * /contenidoGenero:
+ *   get:
+ *     summary: Obtener todos los contenidos junto con sus géneros
+ *     tags:
+ *        - ContenidoGenero
+ *     description: Endpoint para obtener una lista de todos los contenidos (películas y series) y sus géneros.
+ *     responses:
+ *       200:
+ *         description: Lista de contenidos con sus géneros.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   titulo:
+ *                     type: string
+ *                     description: Título del contenido.
+ *                   genre_name:
+ *                     type: string
+ *                     description: Nombre del género.
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Ocurrio un error.
+ */
 
 router.get('/', async (req, res) => {
   try {
@@ -19,6 +58,51 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Ocurrio un error.' });
   }
 });
+
+/**
+ * @swagger
+ * /contenidoGenero/{id}:
+ *   get:
+ *     summary: Obtener géneros de un contenido por ID
+ *     tags:
+ *        - ContenidoGenero
+ *     description: Endpoint para obtener los géneros asociados a un contenido específico por su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido.
+ *     responses:
+ *       200:
+ *         description: Géneros asociados al contenido.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   titulo:
+ *                     type: string
+ *                     description: Título del contenido.
+ *                   genre_name:
+ *                     type: string
+ *                     description: Nombre del género.
+ *       404:
+ *         description: Contenido no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Contenido_genero no encontrado.
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Ocurrio un error.
+ */
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -44,6 +128,48 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: 'Ocurrio un error.' });
   }
 });
+
+/**
+ * @swagger
+ * /contenidoGenero:
+ *   post:
+ *     summary: Añadir un género a un contenido
+ *     tags:
+ *        - ContenidoGenero
+ *     description: Endpoint para añadir un género a un contenido específico utilizando su título y el nombre del género.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *                 description: Título del contenido.
+ *               genre_name:
+ *                 type: string
+ *                 description: Nombre del género a añadir.
+ *     responses:
+ *       200:
+ *         description: Género añadido exitosamente al contenido.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Se agregó el género de manera exitosa.
+ *       404:
+ *         description: Contenido o género no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: No se encontró el contenido o el género.
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Ocurrió un error.
+ */
 
 router.post('/', async (req, res) => {
   const { titulo, genre_name } = req.body;
@@ -91,6 +217,52 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /contenidoGenero/actualizar/{contenidoId}:
+ *   put:
+ *     summary: Actualizar el género de un contenido
+ *     tags:
+ *        - ContenidoGenero
+ *     description: Endpoint para añadir un género adicional a un contenido específico utilizando su ID.
+ *     parameters:
+ *       - in: path
+ *         name: contenidoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               genre_name:
+ *                 type: string
+ *                 description: Nombre del género a añadir.
+ *     responses:
+ *       200:
+ *         description: Género añadido exitosamente al contenido.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: El género se añadió correctamente a la película.
+ *       404:
+ *         description: Género no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: No se encontró el género.
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Ocurrió un error.
+ */
+
 router.put('/actualizar/:contenidoId', async (req, res) => {
   const { contenidoId } = req.params;
   const { genre_name } = req.body;
@@ -125,6 +297,42 @@ router.put('/actualizar/:contenidoId', async (req, res) => {
     res.status(500).json({ error: 'Ocurrio un error :(.' });
   }
 });
+
+/**
+ * @swagger
+ * /contenidoGenero/{contenidoId}:
+ *   delete:
+ *     summary: Eliminar los géneros de un contenido
+ *     tags:
+ *        - ContenidoGenero
+ *     description: Endpoint para eliminar todos los géneros asociados a un contenido específico por su ID.
+ *     parameters:
+ *       - in: path
+ *         name: contenidoId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del contenido.
+ *     responses:
+ *       200:
+ *         description: Géneros eliminados exitosamente del contenido.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Dato eliminado correctamente de contenido_genero.
+ *       404:
+ *         description: Contenido no encontrado en contenido_genero.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: No se encontró el dato en contenido_genero.
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Ocurrió un error.
+ */
 
 router.delete('/:contenidoId', async (req, res) => {
   const { contenidoId } = req.params;

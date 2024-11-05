@@ -1,3 +1,10 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Actor
+ *   description: Rutas relacionadas con los actores
+ */
+
 const express = require('express');
 const router = express.Router();
 const { Actor } = require('../models/actor');
@@ -7,6 +14,8 @@ const { Actor } = require('../models/actor');
  * /actor:
  *   get:
  *     summary: Obtener todos los actores
+ *     tags:
+ *        - Actor
  *     description: Endpoint para obtener una lista de todos los actores en la base de datos.
  *     responses:
  *       200:
@@ -49,6 +58,8 @@ router.get('/', async (req, res) => {
  * /actor/{id}:
  *   get:
  *     summary: Obtener un actor por ID
+ *     tags:
+ *        - Actor
  *     description: Endpoint para obtener los detalles de un actor específico por su ID.
  *     parameters:
  *       - in: path
@@ -97,6 +108,8 @@ router.get('/:id', async (req, res) => {
  * /actor:
  *   post:
  *     summary: Crear un nuevo actor
+ *     tags:
+ *        - Actor
  *     description: Endpoint para crear un nuevo actor en la base de datos.
  *     requestBody:
  *       required: true
@@ -142,6 +155,8 @@ router.post('/', async (req, res) => {
  * /actor/{id}:
  *   put:
  *     summary: Actualizar un actor
+ *     tags:
+ *        - Actor
  *     description: Endpoint para actualizar los datos de un actor existente.
  *     parameters:
  *       - in: path
@@ -203,6 +218,8 @@ router.put('/:id', async (req, res) => {
  * /actor/{id}:
  *   delete:
  *     summary: Eliminar un actor
+ *     tags:
+ *        - Actor
  *     description: Endpoint para eliminar un actor de la base de datos por su ID.
  *     parameters:
  *       - in: path

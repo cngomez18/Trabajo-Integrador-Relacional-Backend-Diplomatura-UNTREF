@@ -1,3 +1,10 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Genero
+ *   description: Rutas relacionadas con los generos
+ */
+
 const express = require('express');
 const { Genero } = require('../models/genero');
 const router = express.Router();
@@ -7,6 +14,8 @@ const router = express.Router();
  * /genero:
  *   get:
  *     summary: Obtener todos los géneros
+ *     tags:
+ *        - Genero
  *     description: Endpoint para obtener una lista de todos los géneros en la base de datos.
  *     responses:
  *       200:
@@ -51,6 +60,8 @@ router.get('/', async (req, res) => {
  * /genero/{id}:
  *   get:
  *     summary: Obtener un género por ID
+ *     tags:
+ *        - Genero
  *     description: Endpoint para obtener un género específico usando su ID.
  *     parameters:
  *       - in: path
@@ -101,6 +112,8 @@ router.get('/:id', async (req, res) => {
  * /genero:
  *   post:
  *     summary: Crear un nuevo género
+ *     tags:
+ *        - Genero 
  *     description: Endpoint para crear un género en la base de datos.
  *     requestBody:
  *       required: true
@@ -155,6 +168,8 @@ router.post('/', async (req, res) => {
  * /genero/{id}:
  *   put:
  *     summary: Actualizar un género existente
+ *     tags:
+ *        - Genero 
  *     description: Endpoint para actualizar un género específico por su ID.
  *     parameters:
  *       - in: path
@@ -229,6 +244,8 @@ router.put('/:id', async (req, res) => {
  * /genero/{id}:
  *   delete:
  *     summary: Eliminar un género
+ *     tags:
+ *        - Genero
  *     description: Endpoint para eliminar un género específico usando su ID.
  *     parameters:
  *       - in: path
