@@ -1,6 +1,8 @@
 const express = require('express');
 const { sequelize } = require('./conexion/database.js');   
 const contenidoRoutes = require('./routes/contenidoRoutes.js');
+const contenidoGeneroRoutes = require('./routes/contenidoGeneroRoutes.js');
+const contenidoActorRoutes = require('./routes/contenidoActorRoutes.js')
 const actorRoutes = require('./routes/actorRoutes.js');
 const generoRoutes = require('./routes/generoRoutes.js');         
 
@@ -13,6 +15,9 @@ app.use(express.json());
 app.use('/actor', actorRoutes)
 app.use('/genero', generoRoutes)
 app.use('/contenido', contenidoRoutes)
+app.use('/contenidoGenero', contenidoGeneroRoutes)
+app.use('/contenidoActor', contenidoActorRoutes)
+
 
 console.log('estoy funcando')
 
