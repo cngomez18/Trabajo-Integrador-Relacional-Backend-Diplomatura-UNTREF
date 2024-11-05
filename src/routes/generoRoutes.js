@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: Genero
- *   description: Rutas relacionadas con los generos
- */
-
 const express = require('express');
 const { Genero } = require('../models/genero');
 const router = express.Router();

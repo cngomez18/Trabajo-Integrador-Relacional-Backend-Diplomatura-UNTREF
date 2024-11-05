@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: Actor
- *   description: Rutas relacionadas con los actores
- */
-
 const express = require('express');
 const router = express.Router();
 const { Actor } = require('../models/actor');

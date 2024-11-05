@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: ContenidoGenero
- *   description: Rutas relacionadas con contenido y generos
- */
-
 const express = require('express');
 const router = express.Router();
 const { sequelize } = require('../conexion/database')

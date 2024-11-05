@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: Contenido
- *   description: Rutas relacionadas con contenido(películas y series)
- */
-
 const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');

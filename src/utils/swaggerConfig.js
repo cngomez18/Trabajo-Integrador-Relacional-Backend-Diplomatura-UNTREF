@@ -14,6 +14,13 @@ const swaggerOptions = {
                 url: 'http://localhost:3000',
             },
         ],
+        tags: [
+            { name: 'Actor', description: 'Rutas relacionadas con los actores' },
+            { name: 'Genero', description: 'Rutas relacionadas con los géneros' },
+            { name: 'Contenido', description: 'Rutas relacionadas con los contenido(película o serie)' },
+            { name: 'ContenidoActor', description: 'Rutas relacionadas con contenido y actores' },
+            { name: 'ContenidoGenero', description: 'Rutas relacionados con contenido y géneros' },
+        ],
         components: {
             schemas: {
                 Actor: {

@@ -1,10 +1,3 @@
-/**
- * @swagger
- * tags:
- *   name: ContenidoActor
- *   description: Rutas relacionadas con contenido y actores
- */
-
 const express = require('express');
 const router = express.Router();
 const { sequelize } = require('../conexion/database')
@@ -14,13 +7,13 @@ const { sequelize } = require('../conexion/database')
  * @swagger
  * /contenidoActor:
  *   get:
- *     summary: Obtener todos los actores de cada contenido
+ *     summary: Endpoint para obtener todos los actores de cada contenido(película o serie) 
  *     tags:
  *       - ContenidoActor
- *     description: Retorna una lista de todos los actores asociados con cada contenido en la base de datos.
+ *     description: Retorna una lista de todos los actores asociados con cada contenido(película o serie) en la base de datos.
  *     responses:
  *       200:
- *         description: Lista de actores y sus respectivos contenidos
+ *         description: Lista de contenidos(películas y series) y sus respectivos actores
  *         content:
  *           application/json:
  *             schema:
@@ -65,7 +58,7 @@ router.get('/', async (req, res) => {
  * @swagger
  * /contenidoActor/{contenidoId}:
  *   get:
- *     summary: Obtener actores por ID de contenido
+ *     summary: Endpoint para obtener los actores de un contenido por su ID
  *     tags:
  *       - ContenidoActor
  *     description: Retorna los actores asociados a un contenido específico mediante su ID.
@@ -78,7 +71,7 @@ router.get('/', async (req, res) => {
  *         description: ID del contenido
  *     responses:
  *       200:
- *         description: Lista de actores asociados al contenido
+ *         description: Lista de actores asociados al contenido específico
  *         content:
  *           application/json:
  *             schema:
@@ -126,7 +119,7 @@ router.get('/:contenidoId', async (req, res) => {
  *     summary: Actualizar asociación de un actor a un contenido
  *     tags:
  *       - ContenidoActor
- *     description: Añade o actualiza la asociación de un actor a un contenido existente en la base de datos.
+ *     description: Endpoint para añadir y actualizar la asociación de un actor a un contenido existente en la base de datos.
  *     parameters:
  *       - in: path
  *         name: contenidoId
@@ -157,7 +150,7 @@ router.get('/:contenidoId', async (req, res) => {
  *         description: Actor no encontrado
  *         content:
  *           application/json:
- *             example: { "error": "Actor not found." }
+ *             example: { "error": "No se encontro al actor." }
  *       500:
  *         description: Error al actualizar asociación
  *         content:
@@ -179,7 +172,7 @@ router.put('/actualizar/:contenidoId', async (req, res) => {
         );
 
         if (!actor) {
-            return res.status(404).json({ error: 'Actor not found.' });
+            return res.status(404).json({ error: 'No se encontro al actor.' });
         }
 
         await sequelize.query(
@@ -204,7 +197,7 @@ router.put('/actualizar/:contenidoId', async (req, res) => {
  *     summary: Asociar un actor a un contenido
  *     tags:
  *       - ContenidoActor
- *     description: Asocia un actor existente a un contenido en la base de datos.
+ *     description: Endpoint para asociar un actor existente a un contenido en la base de datos, crea una nueva asociación en la tabla contenido_actor.
  *     requestBody:
  *       required: true
  *       content:
@@ -223,7 +216,7 @@ router.put('/actualizar/:contenidoId', async (req, res) => {
  *                 description: Apellido del actor
  *     responses:
  *       200:
- *         description: Actor asociado exitosamente al contenido
+ *         description: Asociación agregada exitosamente
  *         content:
  *           application/json:
  *             example: { "message": "Se añadio correctamente la entrada en contenido_actor." }
@@ -265,7 +258,7 @@ router.post('/', async (req, res) => {
         );
 
         if (!actor) {
-            return res.status(404).json({ error: 'Actor not found.' });
+            return res.status(404).json({ error: 'No se encontro al actor.' });
         }
 
         await sequelize.query(
@@ -290,7 +283,7 @@ router.post('/', async (req, res) => {
  *     summary: Eliminar todas las asociaciones de actores a un contenido
  *     tags:
  *       - ContenidoActor   
- *     description: Elimina todas las asociaciones de actores para un contenido específico mediante su ID.
+ *     description: Endpoint para eliminar todas las asociaciones de actores para un contenido específico mediante su ID.
  *     parameters:
  *       - in: path
  *         name: contenidoId
